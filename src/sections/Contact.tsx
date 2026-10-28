@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { ContactForm } from '@/components/ContactForm'
 import Magnet from '@/components/Magnet'
 import StarBorder from '@/components/StarBorder'
 import { Reveal } from '@/components/Reveal'
@@ -68,28 +69,36 @@ export function Contact() {
           <p className="mt-8 max-w-[34rem] text-lg text-fg-muted">{contact.body}</p>
         </Reveal>
 
-        <Reveal className="mt-12 flex flex-wrap items-center gap-4" delay={0.1}>
-          <Magnet padding={70} magnetStrength={3.5} maxOffset={12}>
-            <StarBorder
-              as="a"
-              href={links.email}
-              color="#5de8f6"
-              radius={999}
-              thickness={1}
-              duration={5}
-              glow={0.7}
-              backgroundColor="var(--color-ink-raised)"
-              textColor="var(--color-fg)"
-              borderColor="var(--color-line-strong)"
-              className="h-14 gap-3 px-6! text-base sm:h-16 sm:px-8! sm:text-lg focus-visible:outline-accent!"
-            >
-              <Mail size={20} className="hidden text-accent xs:block" />
-              <span className="font-medium">{profile.email}</span>
-              <ArrowUpRight size={18} className="text-fg-muted" />
-            </StarBorder>
-          </Magnet>
-          <CopyEmail />
-        </Reveal>
+        <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-x-12">
+          <Reveal className="lg:col-span-7" delay={0.1}>
+            <ContactForm />
+          </Reveal>
+          <Reveal className="lg:col-span-5" delay={0.15}>
+            <p className="eyebrow mb-6">Prefer email?</p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Magnet padding={70} magnetStrength={3.5} maxOffset={12}>
+                <StarBorder
+                  as="a"
+                  href={links.email}
+                  color="#5de8f6"
+                  radius={999}
+                  thickness={1}
+                  duration={5}
+                  glow={0.7}
+                  backgroundColor="var(--color-ink-raised)"
+                  textColor="var(--color-fg)"
+                  borderColor="var(--color-line-strong)"
+                  className="h-14 gap-3 px-6! text-base sm:h-16 sm:px-8! sm:text-lg focus-visible:outline-accent!"
+                >
+                  <Mail size={20} className="hidden text-accent xs:block" />
+                  <span className="font-medium">{profile.email}</span>
+                  <ArrowUpRight size={18} className="text-fg-muted" />
+                </StarBorder>
+              </Magnet>
+              <CopyEmail />
+            </div>
+          </Reveal>
+        </div>
 
         <Reveal stagger={0.06} className="mt-20 grid border-t border-line sm:grid-cols-3">
           {SOCIALS.map(({ label: name, handle, href, Icon, external }) => (
