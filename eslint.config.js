@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import prettier from 'eslint-config-prettier'
 
 // Components installed from React Bits (npx shadcn add @react-bits/...). They are kept close to
 // upstream so they stay easy to update, and they use an intentional "latest props in a ref" pattern
@@ -23,7 +24,7 @@ const REACT_BITS = [
 ]
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -45,4 +46,5 @@ export default defineConfig([
       'no-useless-assignment': 'off',
     },
   },
+  prettier,
 ])

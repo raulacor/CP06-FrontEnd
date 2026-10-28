@@ -107,8 +107,7 @@ export const projects: Project[] = [
     slug: 'tv-time',
     title: 'TV Time, Rebuilt',
     kicker: 'Frontend · FIAP',
-    summary:
-      'React + TypeScript movie browser on the TMDB API, with detail pages, watch-lists and a WebGL hero.',
+    summary: 'React + TypeScript movie browser on the TMDB API, with detail pages, watch-lists and a WebGL hero.',
     tags: ['React', 'TypeScript', 'Vite', 'TMDB API'],
     repo: 'https://github.com/raulacor/CP04-WebDev-Criando-o-novo-TV-Time',
   },
@@ -116,8 +115,7 @@ export const projects: Project[] = [
     slug: 'rust-chat',
     title: 'Async Rust Chat',
     kicker: 'Systems · Rust',
-    summary:
-      'Multi-room TCP chat server and terminal client exchanging newline-delimited JSON over async Rust.',
+    summary: 'Multi-room TCP chat server and terminal client exchanging newline-delimited JSON over async Rust.',
     tags: ['Rust', 'async-std', 'Tokio', 'Serde'],
     repo: 'https://github.com/raulacor/Udemy-TCRC-CLI-Chat',
   },
@@ -213,7 +211,16 @@ export const education: TimelineEntry[] = [
 ]
 
 /** Shown as a row under the education entries. */
-export const coursework = ['Python', 'JavaScript & React', 'C++', 'Rust', 'Cybersecurity', 'Assembly', 'DevOps', 'IT governance']
+export const coursework = [
+  'Python',
+  'JavaScript & React',
+  'C++',
+  'Rust',
+  'Cybersecurity',
+  'Assembly',
+  'DevOps',
+  'IT governance',
+]
 
 /**
  * TODO: add certifications from your LinkedIn.

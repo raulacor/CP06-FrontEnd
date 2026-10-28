@@ -1,0 +1,16 @@
+dist
+coverage
+package-lock.json
+public
+# React Bits components are kept close to upstream (see eslint.config.js)
+src/components/AnimatedContent.tsx
+src/components/ClickSpark.tsx
+src/components/DarkVeil.tsx
+src/components/DecryptedText.tsx
+src/components/LogoLoop.tsx
+src/components/Magnet.tsx
+src/components/PillNav.tsx
+src/components/ScrollReveal.tsx
+src/components/SplitText.tsx
+src/components/SpotlightCard.tsx
+src/components/StarBorder.tsx
