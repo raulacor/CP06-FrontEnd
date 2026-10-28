@@ -95,9 +95,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           </a>
         </h3>
 
-        <p className={`mt-3 text-fg-muted ${featured ? 'max-w-[36rem] text-lg' : ''}`}>
-          {project.summary}
-        </p>
+        <p className={`mt-3 text-fg-muted ${featured ? 'max-w-[36rem] text-lg' : ''}`}>{project.summary}</p>
 
         {featured && project.highlights && (
           <ul className="mt-6 space-y-2.5 text-[0.9375rem] text-fg-muted">

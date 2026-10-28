@@ -41,7 +41,10 @@ export function Skills() {
         </Reveal>
       }
     >
-      <Reveal stagger={0.06} className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:mt-20 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-5">
+      <Reveal
+        stagger={0.06}
+        className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:mt-20 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-5"
+      >
         {skillGroups.map(group => (
           <div key={group.label}>
             <h3 className="eyebrow">{group.label}</h3>

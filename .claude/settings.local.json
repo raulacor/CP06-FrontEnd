@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(npm *)",
-      "PowerShell(gh repo list raulacor --limit 50 --json name,description,primaryLanguage,stargazerCount,homepageUrl,updatedAt)"
-    ]
-  }
-}
