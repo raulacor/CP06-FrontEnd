@@ -1,50 +1,46 @@
-import { ProjectCard } from '@/components/ProjectCard'
-import { Reveal } from '@/components/Reveal'
+import { Link } from 'react-router'
+import { ProjectGrid, ProjectGridSkeleton } from '@/components/ProjectGrid'
 import { Section } from '@/components/Section'
-import { links, projects, sections } from '@/data/site'
+import { StatusMessage } from '@/components/ui/StatusMessage'
 import { ArrowUpRight } from '@/components/Icons'
+import { sections } from '@/data/site'
+import { useRepos } from '@/hooks/useRepos'
 
-/**
- * Bento placement by position. lg is a 4-column grid where the featured project takes 2×2.
- * Positions past the sixth fall back to a single cell.
- */
-const PLACEMENT = [
-  'md:col-span-2 lg:col-span-2 lg:row-span-2',
-  'lg:col-span-2',
-  'lg:col-span-1',
-  'lg:col-span-1',
-  'lg:col-span-2',
-  'md:col-span-2 lg:col-span-2',
-]
+const HOME_LIMIT = 6
 
 export function Projects() {
+  const { data: repos, isPending, isError, error, refetch } = useRepos()
+
   return (
     <Section
       {...sections.work}
       title="Selected work"
-      lead="From OSINT tooling to async Rust. Coursework and personal builds, described from the code itself."
+      lead="Pulled live from my GitHub: coursework and personal builds, newest first."
     >
-      <Reveal stagger={0.07} className="mt-14 grid gap-4 sm:mt-20 md:grid-cols-2 lg:grid-cols-4">
-        {projects.map((project, i) => (
-          <div key={project.slug} className={PLACEMENT[i] ?? ''}>
-            <ProjectCard project={project} index={i} />
-          </div>
-        ))}
-      </Reveal>
+      <div className="mt-14 sm:mt-20">
+        {isPending ? (
+          <ProjectGridSkeleton layout="bento" />
+        ) : isError ? (
+          <StatusMessage tone="error" title="Couldn’t load projects from GitHub" onRetry={() => refetch()}>
+            {error.message}
+          </StatusMessage>
+        ) : repos.length === 0 ? (
+          <StatusMessage title="No public projects yet">
+            New repositories will show up here automatically.
+          </StatusMessage>
+        ) : (
+          <ProjectGrid repos={repos.slice(0, HOME_LIMIT)} layout="bento" />
+        )}
+      </div>
 
-      <p className="mt-10 text-fg-muted">
-        More on{' '}
-        <a
-          href={links.github}
-          target="_blank"
-          rel="noreferrer"
-          className="link-draw inline-flex items-center gap-1 text-fg"
-        >
-          github.com/raulacor
-          <ArrowUpRight size={15} />
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
-      </p>
+      {repos && repos.length > HOME_LIMIT && (
+        <p className="mt-10 text-fg-muted">
+          <Link to="/projects" className="link-draw inline-flex items-center gap-1 text-fg">
+            See all {repos.length} projects
+            <ArrowUpRight size={15} />
+          </Link>
+        </p>
+      )}
     </Section>
   )
 }

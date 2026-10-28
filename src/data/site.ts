@@ -1,6 +1,6 @@
 /**
  * All editable site content lives in this file.
- * Components read from here, so you can change copy, links, projects and skills
+ * Components read from here, so you can change copy, links and skills
  * without touching any component code.
  *
  * Project copy was written from each repo's README and source code. Keep it that way:
@@ -61,83 +61,7 @@ export const about = {
 
 // ─── Projects ────────────────────────────────────────────────────────────────
 
-export type Project = {
-  slug: string
-  title: string
-  /** Small label above the title. */
-  kicker: string
-  /** One line, shown on every card. */
-  summary: string
-  /** Bullet points, only shown on the featured card. */
-  highlights?: string[]
-  tags: string[]
-  repo: string
-  /** Live deployment URL, if one exists. Rendered as a second link. */
-  live?: string
-  featured?: boolean
-}
-
-export const projects: Project[] = [
-  {
-    slug: 'ukraid',
-    title: 'UkrAid',
-    kicker: 'OSINT · FIAP Global Solution 2026',
-    summary:
-      'Open-source intelligence for civilians in conflict zones: local risk scores, the nearest shelters and live air-raid alerts.',
-    highlights: [
-      'Python CLI that scores danger from the nearest ACLED conflict events, labeled Critical to Low',
-      'Nearest hospitals, shelters and bus stations within 100 km via OpenStreetMap Overpass',
-      'Air-raid alerts by Ukrainian region from the UkraineAlarm API (asyncio + aiohttp)',
-      'ACLED OAuth client, Nominatim reverse geocoding and a companion website',
-    ],
-    tags: ['Python', 'asyncio', 'ACLED API', 'OpenStreetMap', 'HTML/CSS/JS'],
-    repo: 'https://github.com/raulacor/Global-Solution-2026-UkrAid',
-    featured: true,
-  },
-  {
-    slug: 'steam-sales-radar',
-    title: 'Steam Sales Radar',
-    kicker: 'Data pipeline · FIAP',
-    summary:
-      'Crawler → MongoDB → FastAPI → dashboard. Scrapes Steam discounts into dated price snapshots and serves stats and history over an API.',
-    tags: ['Python', 'BeautifulSoup', 'MongoDB', 'FastAPI', 'scikit-learn'],
-    repo: 'https://github.com/raulacor/CP05-CTP-WebCrawler',
-  },
-  {
-    slug: 'tv-time',
-    title: 'TV Time, Rebuilt',
-    kicker: 'Frontend · FIAP',
-    summary: 'React + TypeScript movie browser on the TMDB API, with detail pages, watch-lists and a WebGL hero.',
-    tags: ['React', 'TypeScript', 'Vite', 'TMDB API'],
-    repo: 'https://github.com/raulacor/CP04-WebDev-Criando-o-novo-TV-Time',
-  },
-  {
-    slug: 'rust-chat',
-    title: 'Async Rust Chat',
-    kicker: 'Systems · Rust',
-    summary: 'Multi-room TCP chat server and terminal client exchanging newline-delimited JSON over async Rust.',
-    tags: ['Rust', 'async-std', 'Tokio', 'Serde'],
-    repo: 'https://github.com/raulacor/Udemy-TCRC-CLI-Chat',
-  },
-  {
-    slug: 'recon-bot',
-    title: 'Black Hands Recon Bot',
-    kicker: 'Security · FIAP Web Exploitation',
-    summary:
-      'Discord bot that puts recon behind slash commands: nmap scans, gau URL discovery, crt.sh subdomains and ipinfo lookups.',
-    tags: ['Python', 'discord.py', 'nmap', 'crt.sh'],
-    repo: 'https://github.com/raulacor/CP04-WebXPL-Bot',
-  },
-  {
-    slug: 'ctf-web-recon',
-    title: 'CTF Web Recon',
-    kicker: 'Security · Tooling',
-    summary:
-      'Python script that chains whois, ffuf, Sublist3r, subfinder, httprobe and nmap into a one-shot recon pass for CTFs.',
-    tags: ['Python', 'nmap', 'ffuf', 'subfinder'],
-    repo: 'https://github.com/raulacor/ctf-web-recon',
-  },
-]
+// Projects are not listed here: they load from the GitHub API (src/services/github.ts).
 
 // ─── Skills ──────────────────────────────────────────────────────────────────
 
