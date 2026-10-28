@@ -80,7 +80,7 @@ export function Contact() {
               glow={0.7}
               backgroundColor="var(--color-ink-raised)"
               textColor="var(--color-fg)"
-              borderColor="rgba(255,255,255,0.12)"
+              borderColor="var(--color-line-strong)"
               className="h-14 gap-3 px-6! text-base sm:h-16 sm:px-8! sm:text-lg focus-visible:outline-accent!"
             >
               <Mail size={20} className="hidden text-accent xs:block" />

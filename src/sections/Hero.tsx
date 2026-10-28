@@ -9,7 +9,11 @@ const delay = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
 
 export function Hero() {
   return (
-    <section id="top" aria-label="Introduction" className="relative isolate flex min-h-[100svh] flex-col">
+    <section
+      id="top"
+      aria-label="Introduction"
+      className="theme-dark relative isolate flex min-h-[100svh] flex-col bg-ink text-fg"
+    >
       <HeroBackground />
 
       <div className="shell relative flex flex-1 flex-col justify-end pt-32 pb-8 sm:pb-12">

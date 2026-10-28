@@ -56,9 +56,45 @@
   --breakpoint-xs: 26rem;
 }
 
+/*
+ * Light theme: same token names, new values. Components only use tokens, so they switch for free.
+ * .theme-dark pins a subtree (the WebGL hero) to the dark palette in either theme.
+ */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --color-ink: #f6f7f9;
+    --color-ink-raised: #ffffff;
+    --color-ink-high: #eceef2;
+    --color-line: rgb(10 11 14 / 0.1);
+    --color-line-strong: rgb(10 11 14 / 0.18);
+    --color-fg: #0d0f13;
+    --color-fg-muted: #4a515b;
+    --color-fg-subtle: #5d646e;
+    --color-accent: #007c94;
+    --color-accent-deep: #00abca;
+  }
+
+  :root[data-theme='light'] .theme-dark {
+    color-scheme: dark;
+    --color-ink: #0a0b0e;
+    --color-ink-raised: #0f1115;
+    --color-ink-high: #14171c;
+    --color-line: rgb(255 255 255 / 0.08);
+    --color-line-strong: rgb(255 255 255 / 0.14);
+    --color-fg: #ecedef;
+    --color-fg-muted: #9aa0a9;
+    --color-fg-subtle: #7c838e;
+    --color-accent: #5de8f6;
+  }
+}
+
 @layer base {
   html {
-    color-scheme: dark;
     background-color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 5.5rem;
@@ -85,7 +121,7 @@
   }
 
   ::selection {
-    background-color: rgb(93 232 246 / 0.28);
+    background-color: rgb(0 171 202 / 0.28);
     color: var(--color-fg);
   }
 

@@ -3,8 +3,15 @@ import { useLocation } from 'react-router'
 import PillNav from '@/components/PillNav'
 import { Monogram } from '@/components/Monogram'
 import { RouterLink } from '@/components/RouterLink'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { navItems, profile } from '@/data/site'
 import { useActiveSection } from '@/hooks/useActiveSection'
+import { useTheme } from '@/hooks/useTheme'
+
+const PALETTE = {
+  dark: { bar: 'rgba(15, 17, 21, 0.72)', highlight: '#ecedef', highlightText: '#0a0b0e', text: '#ecedef' },
+  light: { bar: 'rgba(255, 255, 255, 0.78)', highlight: '#0d0f13', highlightText: '#f6f7f9', text: '#0d0f13' },
+}
 
 const SECTION_IDS = navItems.map(item => item.href.slice(2))
 
@@ -20,6 +27,8 @@ export function Nav() {
   const { pathname } = useLocation()
   const activeHref = activeHrefFor(pathname, active)
   const [scrolled, setScrolled] = useState(false)
+  const { theme } = useTheme()
+  const colors = PALETTE[theme]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -45,18 +54,19 @@ export function Nav() {
           items={navItems}
           activeHref={activeHref}
           ariaLabel="Primary"
-          theme="dark"
+          theme={theme}
           size="sm"
           surface="glass"
           itemStyle="plain"
           hoverEffect="fill"
           indicator="dot"
-          barColor="rgba(15, 17, 21, 0.72)"
-          highlightColor="#ecedef"
-          highlightTextColor="#0a0b0e"
-          textColor="#ecedef"
+          barColor={colors.bar}
+          highlightColor={colors.highlight}
+          highlightTextColor={colors.highlightText}
+          textColor={colors.text}
           style={{ '--pn-dot': 'var(--color-accent)' } as CSSProperties}
         />
+        <ThemeToggle className="pointer-events-auto absolute top-0.5 right-[3.25rem] sm:right-0" />
       </div>
     </header>
   )
