@@ -84,3 +84,15 @@ export const Moon = ({ size = 18, ...props }: IconProps) => (
     <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />
   </svg>
 )
+
+export const Star = ({ size = 18, ...props }: IconProps) => (
+  <svg {...base(size, props)}>
+    <path d="m12 3.5 2.6 5.3 5.9.9-4.25 4.1 1 5.85L12 16.9l-5.25 2.75 1-5.85L3.5 9.7l5.9-.9L12 3.5Z" />
+  </svg>
+)
+
+export const ArrowLeft = ({ size = 18, ...props }: IconProps) => (
+  <svg {...base(size, props)}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+)

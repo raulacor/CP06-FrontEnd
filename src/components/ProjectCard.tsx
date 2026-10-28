@@ -1,7 +1,10 @@
 import type { CSSProperties } from 'react'
+import { Link } from 'react-router'
 import SpotlightCard from '@/components/SpotlightCard'
-import { ArrowUpRight, GitHub } from '@/components/Icons'
-import type { Project } from '@/data/site'
+import { ArrowUpRight, Star } from '@/components/Icons'
+import { CARD_SIZE } from '@/components/projectCardSize'
+import { formatDate, formatRepoName } from '@/lib/format'
+import type { Repo } from '@/services/github'
 
 const CARD_VARS = {
   '--spotlight-card-surface': 'var(--color-ink-raised)',
@@ -9,47 +12,15 @@ const CARD_VARS = {
   '--spotlight-card-shadow': 'none',
 } as CSSProperties
 
-/** Visual readout of UkrAid's real risk model (python/risk_model.py). Decorative. */
-function RiskReadout() {
-  const levels = [
-    { label: 'Critical', bars: 4 },
-    { label: 'High', bars: 3 },
-    { label: 'Moderate', bars: 2 },
-    { label: 'Low', bars: 1 },
-  ]
-  return (
-    <div aria-hidden="true" className="relative rounded-xl border border-line bg-ink/80 p-4 text-[0.8125rem] sm:p-5">
-      <p className="flex items-center gap-2 text-fg-subtle">
-        <span className="text-accent">$</span> risk_model.py
-      </p>
-      <p className="mt-3 font-display font-wide text-lg tracking-[-0.01em] text-fg sm:text-xl">
-        risk(d) = e<sup className="text-[0.6em]">−k·d</sup> / d²
-      </p>
-      <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-4">
-        {levels.map(level => (
-          <div key={level.label} className="flex items-center gap-2">
-            <span className="flex gap-0.5">
-              {Array.from({ length: 4 }, (_, i) => (
-                <span
-                  key={i}
-                  className={`h-2.5 w-1 rounded-[1px] ${i < level.bars ? (level.bars === 4 ? 'bg-accent' : 'bg-fg-muted') : 'bg-line-strong'}`}
-                />
-              ))}
-            </span>
-            <span className="text-fg-subtle">{level.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+type ProjectCardProps = { repo: Repo; index: number; featured?: boolean }
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { featured } = project
+export function ProjectCard({ repo, index, featured = false }: ProjectCardProps) {
+  const title = formatRepoName(repo.name)
+  const tags = repo.topics.length ? repo.topics.slice(0, 4) : repo.language ? [repo.language] : []
 
   return (
     <SpotlightCard
-      className="group flex h-full flex-col rounded-2xl! p-6! has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent sm:p-7!"
+      className={`group flex h-full flex-col rounded-2xl! p-6! has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent sm:p-7! ${featured ? CARD_SIZE.featured : CARD_SIZE.regular}`}
       style={CARD_VARS}
       spotlightColor="#5de8f6"
       intensity={featured ? 0.09 : 0.11}
@@ -71,7 +42,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
             <span className="px-2" aria-hidden="true">
               /
             </span>
-            {project.kicker}
+            {repo.language ?? 'Repository'}
           </p>
           <span
             aria-hidden="true"
@@ -82,61 +53,43 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         </div>
 
         <h3
-          className={`font-wide font-[650] tracking-[-0.025em] ${featured ? 'mt-8 text-[clamp(2.25rem,4vw,3.25rem)] leading-[0.95]' : 'mt-6 text-2xl leading-tight sm:text-[1.65rem]'}`}
+          className={`font-wide font-[650] tracking-[-0.025em] break-words ${featured ? 'mt-8 text-[clamp(2rem,4vw,3.25rem)] leading-[0.95]' : 'mt-6 text-2xl leading-tight sm:text-[1.65rem]'}`}
         >
-          <a
-            href={project.repo}
-            target="_blank"
-            rel="noreferrer"
+          {/* The stretched link makes the whole card clickable while keeping one accessible link. */}
+          <Link
+            to={`/projects/${repo.name}`}
             className="outline-none after:absolute after:inset-0 after:z-[2] after:content-['']"
           >
-            {project.title}
-            <span className="sr-only"> (GitHub repository, opens in a new tab)</span>
-          </a>
+            {title}
+          </Link>
         </h3>
 
-        <p className={`mt-3 text-fg-muted ${featured ? 'max-w-[36rem] text-lg' : ''}`}>{project.summary}</p>
-
-        {featured && project.highlights && (
-          <ul className="mt-6 space-y-2.5 text-[0.9375rem] text-fg-muted">
-            {project.highlights.map(item => (
-              <li key={item} className="flex gap-3">
-                <span aria-hidden="true" className="mt-[0.6em] h-px w-3 shrink-0 bg-accent" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {featured && (
-          <div className="mt-8">
-            <RiskReadout />
-          </div>
-        )}
+        <p className={`mt-3 text-fg-muted ${featured ? 'max-w-[36rem] text-lg' : ''}`}>
+          {repo.description ?? 'No description yet.'}
+        </p>
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-7">
-          <ul className="flex flex-wrap gap-1.5" aria-label="Tech stack">
-            {project.tags.map(tag => (
-              <li key={tag} className="rounded-full border border-line px-2.5 py-1 text-xs text-fg-muted">
-                {tag}
-              </li>
-            ))}
-          </ul>
-          <span className="inline-flex items-center gap-1.5 text-xs text-fg-subtle" aria-hidden="true">
-            <GitHub size={14} /> Source
-          </span>
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noreferrer"
-              className="relative z-[3] inline-flex items-center gap-1.5 rounded-full bg-fg px-3 py-1.5 text-xs font-semibold text-ink"
-            >
-              Live
-              <ArrowUpRight size={14} />
-              <span className="sr-only"> demo of {project.title}, opens in a new tab</span>
-            </a>
+          {tags.length > 0 && (
+            <ul className="flex flex-wrap gap-1.5" aria-label="Topics">
+              {tags.map(tag => (
+                <li key={tag} className="rounded-full border border-line px-2.5 py-1 text-xs text-fg-muted">
+                  {tag}
+                </li>
+              ))}
+            </ul>
           )}
+          <p className="flex items-center gap-3 text-xs text-fg-subtle">
+            {repo.stars > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <Star size={13} />
+                <span className="sr-only">Stars:</span>
+                {repo.stars}
+              </span>
+            )}
+            <span>
+              Updated <time dateTime={repo.updatedAt}>{formatDate(repo.updatedAt)}</time>
+            </span>
+          </p>
         </div>
       </article>
     </SpotlightCard>
