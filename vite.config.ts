@@ -39,6 +39,20 @@ export default defineConfig({
       '@': path.resolve(import.meta.dirname, './src'),
     },
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        // Group what the first paint needs into two files instead of many small shared chunks:
+        // fewer requests on the critical path (lazy chunks still load on demand).
+        codeSplitting: {
+          groups: [
+            { name: 'vendor', test: /node_modules[\\/](react|react-dom|scheduler|react-router|gsap|@gsap)[\\/]/ },
+            { name: 'ui', test: /src[\\/]components[\\/](ui[\\/]|ErrorBoundary|PageLoader)/ },
+          ],
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],

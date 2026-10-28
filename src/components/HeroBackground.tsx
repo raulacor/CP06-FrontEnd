@@ -7,9 +7,11 @@ const DarkVeil = lazy(() => import('@/components/DarkVeil'))
 /**
  * The live veil only runs on a real GPU. Without one (software renderers such as SwiftShader or
  * llvmpipe, used by some low-end devices, VMs and headless audit tools) the shader would run on
- * the CPU and block the main thread, so the pre-rendered still is kept instead. Same for Save-Data.
+ * the CPU and block the main thread, so the pre-rendered still is kept instead. Phones (narrow
+ * screens) and Save-Data also keep the still: it looks the same and saves battery and data.
  */
 const canRunLiveVeil = () => {
+  if (!window.matchMedia('(min-width: 768px)').matches) return false
   if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return false
   try {
     const gl = document.createElement('canvas').getContext('webgl2')
