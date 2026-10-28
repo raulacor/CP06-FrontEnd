@@ -1,13 +1,24 @@
 import { useEffect, useState, type CSSProperties } from 'react'
+import { useLocation } from 'react-router'
 import PillNav from '@/components/PillNav'
 import { Monogram } from '@/components/Monogram'
+import { RouterLink } from '@/components/RouterLink'
 import { navItems, profile } from '@/data/site'
 import { useActiveSection } from '@/hooks/useActiveSection'
 
-const SECTION_IDS = navItems.map(item => item.href.slice(1))
+const SECTION_IDS = navItems.map(item => item.href.slice(2))
+
+/** Home uses the scroll-spy; project pages belong to Work; other pages highlight nothing. */
+function activeHrefFor(pathname: string, activeSection: string) {
+  if (pathname === '/') return activeSection ? `/#${activeSection}` : ''
+  if (pathname.startsWith('/projects')) return '/#work'
+  return ''
+}
 
 export function Nav() {
   const active = useActiveSection(SECTION_IDS)
+  const { pathname } = useLocation()
+  const activeHref = activeHrefFor(pathname, active)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -29,9 +40,10 @@ export function Nav() {
           className="pointer-events-auto"
           logo={<Monogram />}
           logoAlt={`${profile.name}, back to top`}
-          logoHref="#top"
+          logoHref="/#top"
+          linkComponent={RouterLink}
           items={navItems}
-          activeHref={active ? `#${active}` : ''}
+          activeHref={activeHref}
           ariaLabel="Primary"
           theme="dark"
           size="sm"

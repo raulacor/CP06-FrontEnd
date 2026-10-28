@@ -245,4 +245,5 @@ export const sections = {
   contact: { id: 'contact', index: '05', label: 'Contact' },
 } as const
 
-export const navItems = Object.values(sections).map(s => ({ label: s.label, href: `#${s.id}` }))
+/** Absolute hrefs (`/#about`) so the nav also works from project pages. */
+export const navItems = Object.values(sections).map(s => ({ label: s.label, href: `/#${s.id}` }))

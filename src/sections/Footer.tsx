@@ -9,10 +9,14 @@ export function Footer() {
           © {new Date().getFullYear()} {profile.name}
         </p>
         <p>Built with React, Tailwind CSS and React Bits.</p>
-        <a href="#top" className="group inline-flex items-center gap-2 transition-colors hover:text-fg">
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0 })}
+          className="group inline-flex items-center gap-2 transition-colors hover:text-fg"
+        >
           Back to top
           <ArrowUp size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
-        </a>
+        </button>
       </div>
     </footer>
   )
