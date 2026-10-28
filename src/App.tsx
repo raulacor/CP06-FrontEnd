@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
 import { PageLoader } from '@/components/PageLoader'
-import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { SiteLayout } from '@/layouts/SiteLayout'
 import HomePage from '@/pages/HomePage'
 
@@ -13,6 +12,7 @@ const ProjectPage = lazy(() => import('@/pages/ProjectPage'))
 const AdminLayout = lazy(() => import('@/layouts/AdminLayout'))
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const ProtectedRoute = lazy(() => import('@/components/ProtectedRoute'))
 
 export default function App() {
   return (

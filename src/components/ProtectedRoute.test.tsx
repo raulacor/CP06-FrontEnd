@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import type { Session } from '@supabase/supabase-js'
 import { describe, expect, it } from 'vitest'
-import { ProtectedRoute } from '@/components/ProtectedRoute'
+import ProtectedRoute from '@/components/ProtectedRoute'
 import { AuthContext, type AuthContextValue } from '@/contexts/authContext'
 
 function renderAt(path: string, auth: Partial<AuthContextValue>) {

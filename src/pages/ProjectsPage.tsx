@@ -1,11 +1,12 @@
 import { PageHeader } from '@/components/PageHeader'
+import { QueryProvider } from '@/components/QueryProvider'
 import { ProjectGrid, ProjectGridSkeleton } from '@/components/ProjectGrid'
 import { StatusMessage } from '@/components/ui/StatusMessage'
 import { links } from '@/data/site'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { useRepos } from '@/hooks/useRepos'
 
-export default function ProjectsPage() {
+function ProjectsPageContent() {
   useDocumentTitle('Projects')
   const { data: repos, isPending, isError, error, refetch } = useRepos()
 
@@ -40,5 +41,13 @@ export default function ProjectsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function ProjectsPage() {
+  return (
+    <QueryProvider>
+      <ProjectsPageContent />
+    </QueryProvider>
   )
 }

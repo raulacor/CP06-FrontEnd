@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router'
 import { ArrowLeft, ArrowUpRight, GitHub } from '@/components/Icons'
 import { LanguageBar } from '@/components/LanguageBar'
 import { PageHeader } from '@/components/PageHeader'
+import { QueryProvider } from '@/components/QueryProvider'
 import { PageLoader } from '@/components/PageLoader'
 import { StatusMessage } from '@/components/ui/StatusMessage'
 import { buttonStyles } from '@/components/ui/buttonStyles'
@@ -105,7 +106,7 @@ function ProjectDetails({ repo }: { repo: Repo }) {
   )
 }
 
-export default function ProjectPage() {
+function ProjectPageContent() {
   const { slug = '' } = useParams()
   const { data: repo, isPending, isError, error, refetch } = useRepo(slug)
   useDocumentTitle(repo ? formatRepoName(repo.name) : undefined)
@@ -134,4 +135,12 @@ export default function ProjectPage() {
   if (!repo) return <NotFoundPage />
 
   return <ProjectDetails repo={repo} />
+}
+
+export default function ProjectPage() {
+  return (
+    <QueryProvider>
+      <ProjectPageContent />
+    </QueryProvider>
+  )
 }
