@@ -4,9 +4,22 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 // The WebGL veil loads in its own chunk after first paint so it never blocks the hero text.
 const DarkVeil = lazy(() => import('@/components/DarkVeil'))
 
-const supportsWebGL2 = () => {
+/**
+ * The live veil only runs on a real GPU. Without one (software renderers such as SwiftShader or
+ * llvmpipe, used by some low-end devices, VMs and headless audit tools) the shader would run on
+ * the CPU and block the main thread, so the pre-rendered still is kept instead. Phones (narrow
+ * screens) and Save-Data also keep the still: it looks the same and saves battery and data.
+ */
+const canRunLiveVeil = () => {
+  if (!window.matchMedia('(min-width: 768px)').matches) return false
+  if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return false
   try {
-    return !!document.createElement('canvas').getContext('webgl2')
+    const gl = document.createElement('canvas').getContext('webgl2')
+    if (!gl) return false
+    const info = gl.getExtension('WEBGL_debug_renderer_info')
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : ''
+    gl.getExtension('WEBGL_lose_context')?.loseContext()
+    return !/swiftshader|llvmpipe|software|basic render/i.test(renderer)
   } catch {
     return false
   }
@@ -24,7 +37,7 @@ export function HeroBackground() {
   const live = idle && !reduce
 
   useEffect(() => {
-    if (reduce || !supportsWebGL2()) return
+    if (reduce || !canRunLiveVeil()) return
     const start = () => setIdle(true)
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(start, { timeout: 1200 })

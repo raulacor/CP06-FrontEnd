@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { QueryProvider } from '@/components/QueryProvider'
 import { useScrollTriggerRefresh } from '@/hooks/useScrollTriggerRefresh'
 import { Contact } from '@/sections/Contact'
 import { Path } from '@/sections/Path'
@@ -21,11 +22,11 @@ export default function BelowFold() {
   }, [])
 
   return (
-    <>
+    <QueryProvider>
       <Projects />
       <Skills />
       <Path />
       <Contact />
-    </>
+    </QueryProvider>
   )
 }

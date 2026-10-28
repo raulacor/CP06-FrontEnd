@@ -38,7 +38,8 @@ Rules:
 5. Use design tokens (`bg-ink`, `text-fg`, `text-fg-muted`, `border-line`, `text-accent`…), never raw hex colors, so
    both themes keep working.
 6. New pages are lazy-loaded with `React.lazy`. Heavy libraries (Supabase SDK, WebGL) are imported on demand, never in
-   the initial bundle.
+   the initial bundle. Data-fetching subtrees are wrapped in `QueryProvider` (it is not in `main.tsx` on purpose).
+   Mobile Lighthouse performance must stay at 80 or more.
 7. GitHub data goes through `useRepos`/`useRepo`; never add a second request for data already in the cache.
 8. Do not edit the React Bits components listed in `eslint.config.js` unless the task is about them.
 

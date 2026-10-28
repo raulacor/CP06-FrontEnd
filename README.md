@@ -112,7 +112,12 @@ This project was built with Claude Code. Everything that steers the AI is versio
 
 ## Performance
 
+- Mobile Lighthouse performance: 83–92 in local runs (simulated slow 4G, 4× CPU slowdown).
 - Every route except home is lazy-loaded; the dashboard, Supabase SDK and WebGL scene are separate chunks.
+- Sections below About are prefetched while the browser is idle but only render (and call the APIs) when the
+  visitor scrolls near them or opens a deep link such as `/#work`.
+- The live WebGL hero runs only on wide screens with a real GPU; phones, software renderers and Save-Data get
+  the pre-rendered WebP still.
 - Visitors read featured projects through Supabase's REST endpoint with `fetch`, so the SDK never loads for them.
 - GitHub data is fetched once and cached for 10 minutes; navigating between pages makes no new requests.
 - Skeletons match the final card size and images have fixed dimensions, so the layout doesn't jump.
