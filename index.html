@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -10,7 +10,13 @@
     />
     <meta name="author" content="Raul Azzi Corsi" />
     <meta name="theme-color" content="#0a0b0e" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Apply the visitor's saved theme before first paint, so there is no flash of the wrong theme. -->
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.dataset.theme = 'light'
+      } catch {}
+    </script>
     <!-- TODO: replace https://raulacor.vercel.app with your final domain after deploying (here and in src/data/site.ts). -->
     <link rel="canonical" href="https://raulacor.vercel.app/" />
 

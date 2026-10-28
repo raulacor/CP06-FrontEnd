@@ -60,7 +60,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       {featured && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle,rgb(255_255_255/0.07)_1px,transparent_1.5px)] bg-[size:22px_22px] [mask-image:radial-gradient(ellipse_80%_70%_at_100%_0%,#000,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-fg)_8%,transparent)_1px,transparent_1.5px)] bg-[size:22px_22px] [mask-image:radial-gradient(ellipse_80%_70%_at_100%_0%,#000,transparent_70%)]"
         />
       )}
 
