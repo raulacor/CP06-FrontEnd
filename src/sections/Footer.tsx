@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { ArrowUp } from '@/components/Icons'
 import { profile } from '@/data/site'
 
@@ -8,7 +9,12 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <p>Built with React, Tailwind CSS and React Bits.</p>
+        <p>
+          Built with React, Tailwind CSS and React Bits ·{' '}
+          <Link to="/dashboard" className="link-draw hover:text-fg">
+            Owner area
+          </Link>
+        </p>
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0 })}
